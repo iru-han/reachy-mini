@@ -221,6 +221,8 @@ def parse_args() -> argparse.Namespace:
         default=False,
         help="Request to publish the app as an official Reachy Mini app.",
     )
+<<<<<<< HEAD
+=======
     publish_parser.add_argument(
         "--nocheck",
         action="store_true",
@@ -228,6 +230,7 @@ def parse_args() -> argparse.Namespace:
         default=False,
         help="Don't run checks before publishing the app.",
     )
+>>>>>>> upstream/main
 
     return parser.parse_args()
 
@@ -250,7 +253,10 @@ def main() -> None:
             app_path=args.app_path,
             commit_message=args.commit_message,
             official=args.official,
+<<<<<<< HEAD
+=======
             no_check=args.nocheck,
+>>>>>>> upstream/main
         )
 
 

@@ -23,7 +23,10 @@ class MediaBackend(Enum):
     DEFAULT = "default"
     DEFAULT_NO_VIDEO = "default_no_video"
     GSTREAMER = "gstreamer"
+<<<<<<< HEAD
+=======
     GSTREAMER_NO_VIDEO = "gstreamer_no_video"
+>>>>>>> upstream/main
     WEBRTC = "webrtc"
 
 
@@ -58,6 +61,12 @@ class MediaManager:
                 self.logger.info("Using GStreamer media backend.")
                 self._init_camera(use_sim, log_level)
                 self._init_audio(log_level)
+<<<<<<< HEAD
+            case MediaBackend.WEBRTC:
+                self.logger.info("Using WebRTC GStreamer backend.")
+                self._init_webrtc(log_level, signalling_host, 8443)
+                self._init_audio(log_level)
+=======
             case MediaBackend.GSTREAMER_NO_VIDEO:
                 self.logger.info("Using GStreamer audio backend.")
                 self._init_audio(log_level)
@@ -65,6 +74,7 @@ class MediaManager:
                 self.logger.info("Using WebRTC GStreamer backend.")
                 self._init_webrtc(log_level, signalling_host, 8443)
                 # self._init_audio(log_level)
+>>>>>>> upstream/main
             case _:
                 raise NotImplementedError(f"Media backend {backend} not implemented.")
 
@@ -130,10 +140,14 @@ class MediaManager:
             from reachy_mini.media.audio_sounddevice import SoundDeviceAudio
 
             self.audio = SoundDeviceAudio(log_level=log_level)
+<<<<<<< HEAD
+        elif self.backend == MediaBackend.GSTREAMER:
+=======
         elif (
             self.backend == MediaBackend.GSTREAMER
             or self.backend == MediaBackend.GSTREAMER_NO_VIDEO
         ):
+>>>>>>> upstream/main
             self.logger.info("Using GStreamer audio backend.")
             from reachy_mini.media.audio_gstreamer import GStreamerAudio
 

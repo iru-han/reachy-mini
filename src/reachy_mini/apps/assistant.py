@@ -18,6 +18,8 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
 
 
+<<<<<<< HEAD
+=======
 def validate_app_name(text: str) -> bool | str:
     """Validate the app name."""
     if not text.strip():
@@ -33,6 +35,7 @@ def validate_app_name(text: str) -> bool | str:
     return True
 
 
+>>>>>>> upstream/main
 def is_git_repo(path: Path) -> bool:
     """Check if the given path is inside a git repository."""
     try:
@@ -45,6 +48,8 @@ def is_git_repo(path: Path) -> bool:
         return False
 
 
+<<<<<<< HEAD
+=======
 def validate_location(text: str) -> bool | str:
     """Validate the location where to create the app project."""
     path = Path(text).expanduser().resolve()
@@ -65,10 +70,24 @@ def validate_location_and_git_repo(text: str) -> bool | str:
     return True
 
 
+>>>>>>> upstream/main
 def create_cli(
     console: Console, app_name: str | None, app_path: Path | None
 ) -> tuple[str, str, Path]:
     """Create a new Reachy Mini app project using a CLI."""
+<<<<<<< HEAD
+
+    def validate_app_name(text: str) -> bool | str:
+        if not text.strip():
+            return "App name cannot be empty."
+        if " " in text:
+            return "App name cannot contain spaces."
+        if "-" in text:
+            return "App name cannot contain dashes ('-'). Please use underscores ('_') instead."
+        return True
+
+=======
+>>>>>>> upstream/main
     if app_name is None:
         # 1) App name
         console.print("$ What is the name of your app ?")
@@ -105,7 +124,10 @@ def create_cli(
         app_path = questionary.path(
             ">",
             default="",
+<<<<<<< HEAD
+=======
             validate=validate_location_and_git_repo,
+>>>>>>> upstream/main
         ).ask()
         if app_path is None:
             console.print("[red]Aborted.[/red]")
@@ -148,7 +170,11 @@ def create(console: Console, app_name: str, app_path: Path) -> None:
         exit()
 
     module_name = app_name
+<<<<<<< HEAD
+    entrypoint_name = app_name.replace("_", "-")
+=======
     entrypoint_name = app_name.replace("-", "_")
+>>>>>>> upstream/main
     class_name = "".join(word.capitalize() for word in module_name.split("_"))
     class_name_display = " ".join(word.capitalize() for word in module_name.split("_"))
 
@@ -245,7 +271,10 @@ def check(console: Console, app_path: str) -> None:
         app_path = questionary.path(
             ">",
             default="",
+<<<<<<< HEAD
+=======
             validate=validate_location,
+>>>>>>> upstream/main
         ).ask()
         if app_path is None:
             console.print("[red]Aborted.[/red]")
@@ -262,6 +291,12 @@ def check(console: Console, app_path: str) -> None:
     pyproject_file = abs_app_path / "pyproject.toml"
     if not pyproject_file.exists():
         console.print("❌ pyproject.toml is missing", style="bold red")
+<<<<<<< HEAD
+        sys.exit(1)
+
+    # Extract app name
+    with open(pyproject_file, "rb") as f:
+=======
         console.print(
             "Make sure you are providing the path to the root of the app. This is the folder that contains pyproject.toml.",
             style="bold blue",
@@ -270,6 +305,7 @@ def check(console: Console, app_path: str) -> None:
 
     # Extract app name
     with open(pyproject_file, "r", encoding="utf-8") as f:
+>>>>>>> upstream/main
         pyproject_content = toml.load(f)
         project = pyproject_content.get("project", {})
         app_name = project.get("name", None)
@@ -283,9 +319,16 @@ def check(console: Console, app_path: str) -> None:
     pkg_name = app_name.replace("-", "_")
     class_name = "".join(word.capitalize() for word in pkg_name.split("_"))
 
+<<<<<<< HEAD
+    console.print(f"\n🔎 Checking app '{app_name}' in {abs_app_path}/...")
+    console.print(f"\tExpected package name: {pkg_name}")
+    console.print(f"\tExpected class name: {class_name}")
+    console.print(f"\tExpected entrypoint name: {entrypoint_name}\n")
+=======
     console.print(f"\tExpected package name: {pkg_name}", style="dim")
     console.print(f"\tExpected class name: {class_name}", style="dim")
     console.print(f"\tExpected entrypoint name: {entrypoint_name}\n", style="dim")
+>>>>>>> upstream/main
 
     # Check that:
     # - index.html, style.css exist in the root of the app
@@ -324,7 +367,11 @@ def check(console: Console, app_path: str) -> None:
 
     ep = entry_points["reachy_mini_apps"]
     for k, v in ep.items():
+<<<<<<< HEAD
+        console.print(f'Found entrypoint: {k} = "{v}"')
+=======
         console.print(f'Found entrypoint: {k} = "{v}"', style="dim")
+>>>>>>> upstream/main
         if k == entrypoint_name and v == f"{pkg_name}.main:{class_name}":
             console.print(
                 "✅ pyproject.toml contains the correct entrypoint for the app."
@@ -354,7 +401,11 @@ def check(console: Console, app_path: str) -> None:
     console.print(f"✅ {app_name}/main.py exists.")
 
     # - <app_name>/main.py contains a class named <AppName> that inherits from ReachyMiniApp
+<<<<<<< HEAD
+    with open(main_file, "r") as f:  # type: ignore
+=======
     with open(main_file, "r") as f:
+>>>>>>> upstream/main
         main_content = f.read()
     class_name = "".join(
         word.capitalize() for word in app_name.replace("-", "_").split("_")
@@ -592,6 +643,10 @@ def request_app_addition(new_app_repo_id: str) -> bool:
     return True
 
 
+<<<<<<< HEAD
+def publish(
+    console: Console, app_path: str, commit_message: str, official: bool = False
+=======
 def try_to_push(console: Console, _app_path: Path) -> bool:
     """Try to push changes to the remote repository."""
     console.print("Pushing changes to the remote repository ...", style="bold blue")
@@ -615,6 +670,7 @@ def publish(
     commit_message: str,
     official: bool = False,
     no_check: bool = False,
+>>>>>>> upstream/main
 ) -> None:
     """Publish the app to the Reachy Mini app store.
 
@@ -623,7 +679,10 @@ def publish(
         app_path (str): Local path to the app to publish.
         commit_message (str): Commit message for the app publish.
         official (bool): Request to publish the app as an official Reachy Mini app.
+<<<<<<< HEAD
+=======
         no_check (bool): Don't run checks before publishing the app.
+>>>>>>> upstream/main
 
     """
     import huggingface_hub as hf
@@ -633,7 +692,10 @@ def publish(
         app_path = questionary.path(
             ">",
             default="",
+<<<<<<< HEAD
+=======
             validate=validate_location,
+>>>>>>> upstream/main
         ).ask()
         if app_path is None:
             console.print("[red]Aborted.[/red]")
@@ -644,11 +706,18 @@ def publish(
                 "[red] Safeguard : You may have selected reachy_mini repo as your app. Aborted.[/red]"
             )
             exit()
+<<<<<<< HEAD
+        app_path = Path(app_path).expanduser().resolve()
+    if not os.path.exists(app_path):
+        console.print(f"[red]App path {app_path} does not exist.[/red]")
+        sys.exit()
+=======
     app_path = Path(app_path).expanduser().resolve()  # type: ignore
     if not os.path.exists(app_path):
         console.print(f"[red]App path {app_path} does not exist.[/red]")
         sys.exit()
 
+>>>>>>> upstream/main
     if not hf.get_token():
         console.print(
             "[red]You need to be logged in to Hugging Face to publish an app.[/red]"
@@ -666,6 +735,10 @@ def publish(
     repo_url = f"https://huggingface.co/spaces/{repo_path}"
 
     if hf.repo_exists(repo_path, repo_type="space"):
+<<<<<<< HEAD
+        os.system(f"cd {app_path} && git pull {repo_url} main")
+        console.print("App already exists on Hugging Face Spaces. Updating...")
+=======
         if official:
             # ask for confirmation
             if not questionary.confirm(
@@ -720,6 +793,7 @@ def publish(
             console.print(f"\n🔎 Running checks on the app at {app_path}/...")
             check(console, str(app_path))
 
+>>>>>>> upstream/main
         commit_message = questionary.text(
             "\n$ Enter a commit message for the update:",
             default="Update app",
@@ -727,6 +801,13 @@ def publish(
         if commit_message is None:
             console.print("[red]Aborted.[/red]")
             exit()
+<<<<<<< HEAD
+        os.system(
+            f"cd {app_path} && git add . && git commit -m '{commit_message}' && git push HEAD:main"
+        )
+        console.print("✅ App updated successfully.")
+    else:
+=======
 
         # commit local changes
         console.print("Committing changes locally ...", style="bold blue")
@@ -749,6 +830,7 @@ def publish(
             console.print(f"\n🔎 Running checks on the app at {app_path}/...")
             check(console, str(app_path))
 
+>>>>>>> upstream/main
         console.print("Do you want your space to be created private or public?")
         privacy = questionary.select(
             ">",
@@ -769,6 +851,24 @@ def publish(
 
         console.print("✅ App published successfully.", style="bold green")
 
+<<<<<<< HEAD
+    if official:
+        # ask for confirmation
+        if not questionary.confirm(
+            "Are you sure you want to ask to publish this app as an official Reachy Mini app?"
+        ).ask():
+            console.print("[red]Aborted.[/red]")
+            exit()
+
+        worked = request_app_addition(repo_path)
+        if worked:
+            console.print(
+                "\nYou have requested to publish your app as an official Reachy Mini app."
+            )
+            console.print(
+                "The Pollen and Hugging Face teams will review your app. Thank you for your contribution!"
+            )
+=======
         if official:
             # ask for confirmation
             if not questionary.confirm(
@@ -785,3 +885,4 @@ def publish(
                 console.print(
                     "The Pollen and Hugging Face teams will review your app. Thank you for your contribution!"
                 )
+>>>>>>> upstream/main

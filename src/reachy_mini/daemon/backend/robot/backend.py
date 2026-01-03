@@ -35,7 +35,10 @@ class RobotBackend(Backend):
         kinematics_engine: str = "AnalyticalKinematics",
         hardware_error_check_frequency: float = 1.0,
         use_audio: bool = True,
+<<<<<<< HEAD
+=======
         wireless_version: bool = False,
+>>>>>>> upstream/main
         hardware_config_filepath: str | None = None,
     ):
         """Initialize the RobotBackend.
@@ -47,7 +50,10 @@ class RobotBackend(Backend):
             kinematics_engine (str): Kinematics engine to use. Defaults to "AnalyticalKinematics".
             hardware_error_check_frequency (float): Frequency in seconds to check for hardware errors. Default is 1.0.
             use_audio (bool): If True, use audio. Default is True.
+<<<<<<< HEAD
+=======
             wireless_version (bool): If True, indicates that the wireless version of Reachy Mini is used. Default is False.
+>>>>>>> upstream/main
             hardware_config_filepath (str | None): Path to the hardware configuration YAML file. Default is None.
 
         Tries to connect to the Reachy Mini motor controller and initializes the control loop.
@@ -57,7 +63,10 @@ class RobotBackend(Backend):
             check_collision=check_collision,
             kinematics_engine=kinematics_engine,
             use_audio=use_audio,
+<<<<<<< HEAD
+=======
             wireless_version=wireless_version,
+>>>>>>> upstream/main
         )
 
         self.logger = logging.getLogger(__name__)
@@ -556,7 +565,11 @@ class RobotBackend(Backend):
 
         def voltage_ok(
             id: int,
+<<<<<<< HEAD
+            allowed_max_voltage: float = 7.3,
+=======
             allowed_max_voltage: float = 7.8,
+>>>>>>> upstream/main
         ) -> bool:
             assert self.c is not None, (
                 "Motor controller not initialized or already closed."

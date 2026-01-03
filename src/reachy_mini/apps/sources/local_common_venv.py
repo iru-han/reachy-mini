@@ -15,11 +15,14 @@ from .. import AppInfo, SourceKind
 from ..utils import running_command
 
 
+<<<<<<< HEAD
+=======
 def _check_uv_available() -> bool:
     """Check if uv is available on the system."""
     return shutil.which("uv") is not None
 
 
+>>>>>>> upstream/main
 def _is_windows() -> bool:
     """Check if the current platform is Windows."""
     return platform.system() == "Windows"
@@ -331,6 +334,8 @@ async def install_package(
     desktop_app_daemon: bool = False,
 ) -> int:
     """Install a package given an AppInfo object, streaming logs."""
+<<<<<<< HEAD
+=======
     # Check if uv is available
     use_uv = _check_uv_available()
     if not use_uv:
@@ -339,6 +344,7 @@ async def install_package(
             "Install uv for faster installs: pip install uv"
         )
     
+>>>>>>> upstream/main
     if app.source_kind == SourceKind.HF_SPACE:
         # Use huggingface_hub to download the repo (handles LFS automatically)
         # This avoids requiring git-lfs to be installed on the system
@@ -397,6 +403,10 @@ async def install_package(
                     python_path = _get_app_python(
                         app_name, wireless_version, desktop_app_daemon
                     )
+<<<<<<< HEAD
+                    ret = await running_command(
+                        [
+=======
                     
                     if use_uv:
                         install_cmd = [
@@ -409,14 +419,21 @@ async def install_package(
                         ]
                     else:
                         install_cmd = [
+>>>>>>> upstream/main
                             str(python_path),
                             "-m",
                             "pip",
                             "install",
                             "reachy-mini[gstreamer]",
+<<<<<<< HEAD
+                        ],
+                        logger=logger,
+                    )
+=======
                         ]
                     
                     ret = await running_command(install_cmd, logger=logger)
+>>>>>>> upstream/main
                     if ret != 0:
                         logger.warning(
                             "Failed to pre-install reachy-mini, continuing anyway"
@@ -428,6 +445,12 @@ async def install_package(
             python_path = _get_app_python(
                 app_name, wireless_version, desktop_app_daemon
             )
+<<<<<<< HEAD
+            ret = await running_command(
+                [str(python_path), "-m", "pip", "install", target],
+                logger=logger,
+            )
+=======
             
             if use_uv:
                 install_cmd = ["uv", "pip", "install", "--python", str(python_path), target]
@@ -435,6 +458,7 @@ async def install_package(
                 install_cmd = [str(python_path), "-m", "pip", "install", target]
             
             ret = await running_command(install_cmd, logger=logger)
+>>>>>>> upstream/main
 
             if ret != 0:
                 return ret
@@ -453,12 +477,19 @@ async def install_package(
                 shutil.rmtree(venv_path)
     else:
         # Original behavior: install into current environment
+<<<<<<< HEAD
+        return await running_command(
+            [sys.executable, "-m", "pip", "install", target],
+            logger=logger,
+        )
+=======
         if use_uv:
             install_cmd = ["uv", "pip", "install", "--python", sys.executable, target]
         else:
             install_cmd = [sys.executable, "-m", "pip", "install", target]
         
         return await running_command(install_cmd, logger=logger)
+>>>>>>> upstream/main
 
 
 def get_app_module(
@@ -513,6 +544,12 @@ async def uninstall_package(
             python_path = _get_app_python(
                 app_name, wireless_version, desktop_app_daemon
             )
+<<<<<<< HEAD
+            return await running_command(
+                [str(python_path), "-m", "pip", "uninstall", "-y", app_name],
+                logger=logger,
+            )
+=======
             
             # Check if uv is available
             use_uv = _check_uv_available()
@@ -540,6 +577,7 @@ async def uninstall_package(
             if ret == 0:
                 logger.info(f"Successfully uninstalled '{app_name}'")
             return ret
+>>>>>>> upstream/main
         else:
             # Desktop: remove the entire per-app venv directory
             logger.info(f"Removing venv for '{app_name}' at {venv_path}")
@@ -547,10 +585,20 @@ async def uninstall_package(
             logger.info(f"Successfully uninstalled '{app_name}'")
             return 0
     else:
+<<<<<<< HEAD
+        # Original behavior: uninstall from current environment
+=======
+>>>>>>> upstream/main
         existing_apps = await list_available_apps()
         if app_name not in [app.name for app in existing_apps]:
             raise ValueError(f"Cannot uninstall app '{app_name}': it is not installed")
 
+<<<<<<< HEAD
+        return await running_command(
+            [sys.executable, "-m", "pip", "uninstall", "-y", app_name],
+            logger=logger,
+        )
+=======
         # Check if uv is available
         use_uv = _check_uv_available()
         
@@ -565,3 +613,4 @@ async def uninstall_package(
         if ret == 0:
             logger.info(f"Successfully uninstalled '{app_name}'")
         return ret
+>>>>>>> upstream/main

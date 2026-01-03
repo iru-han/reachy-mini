@@ -118,6 +118,8 @@ class ZenohServer(AbstractServer):
         data = sample.payload.to_string()
         command = json.loads(data)
         with self._lock:
+<<<<<<< HEAD
+=======
             block_targets = self.backend.is_move_running  # Prevent concurrent target updates from different clients
 
             def _maybe_ignore(field: str) -> bool:
@@ -129,6 +131,7 @@ class ZenohServer(AbstractServer):
                 )
                 return True
 
+>>>>>>> upstream/main
             if "torque" in command:
                 if (
                     command["ids"] is not None
@@ -140,6 +143,21 @@ class ZenohServer(AbstractServer):
                     else:
                         self.backend.set_motor_control_mode(MotorControlMode.Disabled)
             if "head_joint_positions" in command:
+<<<<<<< HEAD
+                self.backend.set_target_head_joint_positions(
+                    np.array(command["head_joint_positions"])
+                )
+            if "head_pose" in command:
+                self.backend.set_target_head_pose(
+                    np.array(command["head_pose"]).reshape(4, 4)
+                )
+            if "body_yaw" in command:
+                self.backend.set_target_body_yaw(command["body_yaw"])
+            if "antennas_joint_positions" in command:
+                self.backend.set_target_antenna_joint_positions(
+                    np.array(command["antennas_joint_positions"]),
+                )
+=======
                 if _maybe_ignore("head_joint_positions"):
                     pass
                 else:
@@ -165,6 +183,7 @@ class ZenohServer(AbstractServer):
                     self.backend.set_target_antenna_joint_positions(
                         np.array(command["antennas_joint_positions"]),
                     )
+>>>>>>> upstream/main
             if "gravity_compensation" in command:
                 try:
                     if command["gravity_compensation"]:

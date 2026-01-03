@@ -174,6 +174,8 @@ def set_volume_linux(volume: int) -> bool:
             timeout=AUDIO_COMMAND_TIMEOUT,
             check=True,
         )
+<<<<<<< HEAD
+=======
         subprocess.run(
             ["amixer", "-c", card_name, "sset", "PCM,1", "100%"],
             capture_output=True,
@@ -181,6 +183,7 @@ def set_volume_linux(volume: int) -> bool:
             timeout=AUDIO_COMMAND_TIMEOUT,
             check=True,
         )
+>>>>>>> upstream/main
         return True
     except (
         subprocess.TimeoutExpired,

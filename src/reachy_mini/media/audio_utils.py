@@ -5,6 +5,8 @@ import subprocess
 from pathlib import Path
 
 
+<<<<<<< HEAD
+=======
 def _process_card_number_output(output: str) -> int:
     """Process the output of 'arecord -l' to find the ReSpeaker or Reachy Mini Audio card number."""
     lines = output.split("\n")
@@ -24,6 +26,7 @@ def _process_card_number_output(output: str) -> int:
     return 0  # default sound card
 
 
+>>>>>>> upstream/main
 def get_respeaker_card_number() -> int:
     """Return the card number of the ReSpeaker sound card, or 0 if not found."""
     try:
@@ -32,7 +35,27 @@ def get_respeaker_card_number() -> int:
         )
         output = result.stdout
 
+<<<<<<< HEAD
+        lines = output.split("\n")
+        for line in lines:
+            if "reachy mini audio" in line.lower() and "card" in line:
+                card_number = line.split(":")[0].split("card ")[1].strip()
+                logging.debug(f"Found Reachy Mini Audio sound card: {card_number}")
+                return int(card_number)
+            elif "respeaker" in line.lower() and "card" in line:
+                card_number = line.split(":")[0].split("card ")[1].strip()
+                logging.warning(
+                    f"Found ReSpeaker sound card: {card_number}. Please update firmware!"
+                )
+                return int(card_number)
+
+        logging.warning(
+            "Reachy Mini Audio sound card not found. Returning default card"
+        )
+        return 0  # default sound card
+=======
         return _process_card_number_output(output)
+>>>>>>> upstream/main
 
     except subprocess.CalledProcessError as e:
         logging.error(f"Cannot find sound card: {e}")
@@ -46,6 +69,8 @@ def has_reachymini_asoundrc() -> bool:
         return False
     content = asoundrc_path.read_text(errors="ignore")
     return "reachymini_audio_sink" in content and "reachymini_audio_src" in content
+<<<<<<< HEAD
+=======
 
 
 def check_reachymini_asoundrc() -> bool:
@@ -112,3 +137,4 @@ pcm.reachymini_audio_src {{
     asoundrc_path = Path.home().joinpath(".asoundrc")
     with open(asoundrc_path, "w") as f:
         f.write(asoundrc_content)
+>>>>>>> upstream/main

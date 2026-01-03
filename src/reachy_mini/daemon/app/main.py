@@ -33,6 +33,8 @@ from reachy_mini.daemon.app.routers import (
     volume,
 )
 from reachy_mini.daemon.daemon import Daemon
+<<<<<<< HEAD
+=======
 from reachy_mini.media.audio_utils import (
     check_reachymini_asoundrc,
     write_asoundrc_to_home,
@@ -40,6 +42,7 @@ from reachy_mini.media.audio_utils import (
 from reachy_mini.utils.wireless_version.startup_check import (
     check_and_fix_venvs_ownership,
 )
+>>>>>>> upstream/main
 
 
 @dataclass
@@ -52,6 +55,11 @@ class Args:
     wireless_version: bool = False
     desktop_app_daemon: bool = False
 
+<<<<<<< HEAD
+    stream: bool = False
+
+=======
+>>>>>>> upstream/main
     serialport: str = "auto"
     hardware_config_filepath: str | None = None
 
@@ -132,6 +140,10 @@ def create_app(args: Args, health_check_event: asyncio.Event | None = None) -> F
     app.state.args = args
     app.state.daemon = Daemon(
         robot_name=args.robot_name,
+<<<<<<< HEAD
+        stream=args.stream,
+=======
+>>>>>>> upstream/main
         wireless_version=args.wireless_version,
         desktop_app_daemon=args.desktop_app_daemon,
     )
@@ -270,6 +282,16 @@ def main() -> None:
     )
 
     parser.add_argument(
+<<<<<<< HEAD
+        "--stream",
+        action="store_true",
+        default=default_args.stream,
+        help="Enable webrtc streaming. For wireless version only (default: False).",
+    )
+
+    parser.add_argument(
+=======
+>>>>>>> upstream/main
         "--robot-name",
         type=str,
         default=default_args.robot_name,
@@ -443,6 +465,8 @@ def main() -> None:
         logging.getLogger().addHandler(file_handler)
         logging.getLogger().setLevel(args.log_level)
 
+<<<<<<< HEAD
+=======
     if args.wireless_version:
         # Check and fix ownership of /venvs directory
         check_and_fix_venvs_ownership(custom_logger=logging.getLogger())
@@ -458,6 +482,7 @@ def main() -> None:
             )
             write_asoundrc_to_home()
 
+>>>>>>> upstream/main
     run_app(Args(**vars(args)))
 
 

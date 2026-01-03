@@ -1,9 +1,15 @@
 import bisect  # noqa: D100
 import json
+<<<<<<< HEAD
+from glob import glob
+from pathlib import Path
+from typing import Any, Dict, List
+=======
 import os
 from glob import glob
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+>>>>>>> upstream/main
 
 import numpy as np
 import numpy.typing as npt
@@ -21,10 +27,16 @@ def lerp(v0: float, v1: float, alpha: float) -> float:
 class RecordedMove(Move):
     """Represent a recorded move."""
 
+<<<<<<< HEAD
+    def __init__(self, move: Dict[str, Any]) -> None:
+        """Initialize RecordedMove."""
+        self.move = move
+=======
     def __init__(self, move: Dict[str, Any], sound_path: Optional[Path] = None) -> None:
         """Initialize RecordedMove."""
         self.move = move
         self._sound_path = sound_path
+>>>>>>> upstream/main
 
         self.description: str = self.move["description"]
         self.timestamps: List[float] = self.move["time"]
@@ -41,11 +53,14 @@ class RecordedMove(Move):
         """Get the duration of the recorded move."""
         return len(self.trajectory) * self.dt
 
+<<<<<<< HEAD
+=======
     @property
     def sound_path(self) -> Optional[Path]:
         """Get the sound path associated with the move, if any."""
         return self._sound_path
 
+>>>>>>> upstream/main
     def evaluate(
         self, t: float
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64], float]:
@@ -112,7 +127,10 @@ class RecordedMoves:
         self.hf_dataset_name = hf_dataset_name
         self.local_path = snapshot_download(self.hf_dataset_name, repo_type="dataset")
         self.moves: Dict[str, Any] = {}
+<<<<<<< HEAD
+=======
         self.sounds: Dict[str, Optional[Path]] = {}
+>>>>>>> upstream/main
 
         self.process()
 
@@ -126,12 +144,15 @@ class RecordedMoves:
             move = json.load(open(move_path, "r"))
             self.moves[move_name] = move
 
+<<<<<<< HEAD
+=======
             sound_path = move_path.with_suffix(".wav")
             self.sounds[move_name] = None
 
             if os.path.exists(sound_path):
                 self.sounds[move_name] = sound_path
 
+>>>>>>> upstream/main
     def get(self, move_name: str) -> RecordedMove:
         """Get a recorded move by name."""
         if move_name not in self.moves:
@@ -139,7 +160,11 @@ class RecordedMoves:
                 f"Move {move_name} not found in recorded moves library {self.hf_dataset_name}"
             )
 
+<<<<<<< HEAD
+        return RecordedMove(self.moves[move_name])
+=======
         return RecordedMove(self.moves[move_name], self.sounds[move_name])
+>>>>>>> upstream/main
 
     def list_moves(self) -> List[str]:
         """List all moves in the loaded library."""

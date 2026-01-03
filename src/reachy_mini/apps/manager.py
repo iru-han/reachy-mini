@@ -9,7 +9,10 @@ from enum import Enum
 from typing import TYPE_CHECKING, Any, Optional
 
 import numpy as np
+<<<<<<< HEAD
+=======
 import psutil
+>>>>>>> upstream/main
 from pydantic import BaseModel
 
 from . import AppInfo, SourceKind
@@ -68,6 +71,12 @@ class AppManager:
         if self.is_app_running():
             await self.stop_current_app()
 
+<<<<<<< HEAD
+    # App lifecycle management
+    # Only one app can be started at a time for now
+    def is_app_running(self) -> bool:
+        """Check if an app is currently running."""
+=======
     def _kill_process_tree(self, pid: int) -> None:
         """Kill a process and all its children recursively."""
         try:
@@ -85,11 +94,15 @@ class AppManager:
     # Only one app can be started at a time for now
     def is_app_running(self) -> bool:
         """Check if an app is currently running or stopping."""
+>>>>>>> upstream/main
         return self.current_app is not None and self.current_app.status.state in (
             AppState.STARTING,
             AppState.RUNNING,
             AppState.ERROR,
+<<<<<<< HEAD
+=======
             AppState.STOPPING,
+>>>>>>> upstream/main
         )
 
     async def start_app(self, app_name: str, *args: Any, **kwargs: Any) -> AppStatus:
@@ -180,12 +193,18 @@ class AppManager:
 
         return self.current_app.status
 
+<<<<<<< HEAD
+    async def stop_current_app(self, timeout: float | None = 5.0) -> None:
+        """Stop the current app subprocess."""
+        if not self.is_app_running():
+=======
     async def stop_current_app(self, timeout: float | None = 20.0) -> None:
         """Stop the current app subprocess."""
         if self.current_app is None or self.current_app.status.state in (
             AppState.DONE,
             AppState.STOPPING,
         ):
+>>>>>>> upstream/main
             raise RuntimeError("No app is currently running")
 
         assert self.current_app is not None
@@ -211,11 +230,18 @@ class AppManager:
                 await asyncio.wait_for(process.wait(), timeout=timeout)
                 self.logger.getChild("runner").info("App stopped successfully")
             except asyncio.TimeoutError:
+<<<<<<< HEAD
+                # Force kill if timeout expires
+                self.logger.getChild("runner").warning(
+                    "App did not stop within timeout, forcing termination"
+                )
+=======
                 # Force kill if timeout expires - also kill child processes
                 self.logger.getChild("runner").warning(
                     "App did not stop within timeout, forcing termination"
                 )
                 self._kill_process_tree(process.pid)
+>>>>>>> upstream/main
                 process.kill()
                 await process.wait()
 

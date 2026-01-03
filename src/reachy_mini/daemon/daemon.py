@@ -28,7 +28,10 @@ from reachy_mini.io import (
     ZenohServer,
 )
 from reachy_mini.media.media_manager import MediaManager
+<<<<<<< HEAD
+=======
 from reachy_mini.tools.reflash_motors import reflash_motors
+>>>>>>> upstream/main
 
 from .backend.mujoco import MujocoBackend, MujocoBackendStatus
 from .backend.robot import RobotBackend, RobotBackendStatus
@@ -45,6 +48,10 @@ class Daemon:
         log_level: str = "INFO",
         robot_name: str = "reachy_mini",
         wireless_version: bool = False,
+<<<<<<< HEAD
+        stream: bool = False,
+=======
+>>>>>>> upstream/main
         desktop_app_daemon: bool = False,
     ) -> None:
         """Initialize the Reachy Mini daemon."""
@@ -82,6 +89,16 @@ class Daemon:
         self._webrtc: Optional[Any] = (
             None  # type GstWebRTC imported for wireless version only
         )
+<<<<<<< HEAD
+        if stream:
+            if not wireless_version:
+                raise RuntimeError(
+                    "WebRTC streaming is only supported for wireless version. Use --wireless-version flag."
+                )
+            from reachy_mini.media.webrtc_daemon import GstWebRTC
+
+            self._webrtc = GstWebRTC(log_level)
+=======
         if wireless_version:
             from reachy_mini.media.webrtc_daemon import GstWebRTC
 
@@ -90,6 +107,7 @@ class Daemon:
             except Exception as e:
                 self.logger.error(f"Failed to initialize WebRTC: {e}")
                 self._webrtc = None
+>>>>>>> upstream/main
 
     async def start(
         self,
@@ -186,12 +204,15 @@ class Daemon:
                 ws_uri=websocket_uri + "/robot", backend=self.backend
             )
 
+<<<<<<< HEAD
+=======
         self._thread_publish_frames: Optional[Thread] = None
         self._thread_event_publish_audio: Optional[Event] = None
         self._thread_publish_audio: Optional[Thread] = None
         self._thread_event_publish_frames: Optional[Event] = None
         self.websocket_frame_sender: Optional[AsyncWebSocketFrameSender] = None
         self.websocket_audio_sender: Optional[AsyncWebSocketAudioStreamer] = None
+>>>>>>> upstream/main
         if stream_media:
             if websocket_uri is None:
                 raise ValueError("WebSocket URI is required when streaming media.")
@@ -230,14 +251,20 @@ class Daemon:
                 if (
                     self._thread_publish_frames is not None
                     and self._thread_publish_frames.is_alive()
+<<<<<<< HEAD
+=======
                     and self._thread_event_publish_frames is not None
+>>>>>>> upstream/main
                 ):
                     self._thread_event_publish_frames.set()
                     self._thread_publish_frames.join(timeout=2.0)
                 if (
                     self._thread_publish_audio is not None
                     and self._thread_publish_audio.is_alive()
+<<<<<<< HEAD
+=======
                     and self._thread_event_publish_audio is not None
+>>>>>>> upstream/main
                 ):
                     self._thread_event_publish_audio.set()
                     self._thread_publish_audio.join(timeout=2.0)
@@ -291,12 +318,15 @@ class Daemon:
 
     def _publish_frames(self) -> None:
         """Publish the media to the WebSocket."""
+<<<<<<< HEAD
+=======
         if (
             self._thread_event_publish_frames is None
             or self.websocket_frame_sender is None
         ):
             self.logger.warning("_publish_frames called but not properly initialized.")
             return
+>>>>>>> upstream/main
         while self._thread_event_publish_frames.is_set() is False:
             frame = self.media_manager.get_frame()
             if frame is not None:
@@ -305,6 +335,8 @@ class Daemon:
 
     def _publish_audio(self) -> None:
         """Publish the audio to the WebSocket."""
+<<<<<<< HEAD
+=======
         if (
             self._thread_event_publish_audio is None
             or self.websocket_audio_sender is None
@@ -312,6 +344,7 @@ class Daemon:
             self.logger.warning("_publish_audio called but not properly initialized.")
             return
 
+>>>>>>> upstream/main
         while self._thread_event_publish_audio.is_set() is False:
             audio = self.media_manager.get_audio_sample()
             if audio is not None:
@@ -577,7 +610,10 @@ class Daemon:
         use_audio: bool,
         websocket_uri: Optional[str],
         hardware_config_filepath: str | None = None,
+<<<<<<< HEAD
+=======
         reflash_motors_on_start: bool = True,
+>>>>>>> upstream/main
     ) -> "RobotBackend | MujocoBackend":
         if sim:
             return MujocoBackend(
@@ -610,17 +646,23 @@ class Daemon:
             self.logger.info(
                 f"Creating RobotBackend with parameters: serialport={serialport}, check_collision={check_collision}, kinematics_engine={kinematics_engine}"
             )
+<<<<<<< HEAD
+=======
 
             if reflash_motors_on_start:
                 reflash_motors(serialport, dont_light_up=True)
 
+>>>>>>> upstream/main
             return RobotBackend(
                 serialport=serialport,
                 log_level=self.log_level,
                 check_collision=check_collision,
                 kinematics_engine=kinematics_engine,
                 use_audio=use_audio,
+<<<<<<< HEAD
+=======
                 wireless_version=wireless_version,
+>>>>>>> upstream/main
                 hardware_config_filepath=hardware_config_filepath,
             )
 

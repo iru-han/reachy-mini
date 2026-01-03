@@ -15,7 +15,10 @@ class MotorConfig:
     angle_limit_max: int
     return_delay_time: int
     shutdown_error: int
+<<<<<<< HEAD
+=======
     operating_mode: int
+>>>>>>> upstream/main
     pid: tuple[int, int, int] | None = None
 
 
@@ -52,7 +55,10 @@ def parse_yaml_config(filename: str) -> ReachyMiniConfig:
                 angle_limit_max=params["upper_limit"],
                 return_delay_time=params["return_delay_time"],
                 shutdown_error=params["shutdown_error"],
+<<<<<<< HEAD
+=======
                 operating_mode=params["operating_mode"],
+>>>>>>> upstream/main
                 pid=params.get("pid"),
             )
 
