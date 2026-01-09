@@ -2907,7 +2907,7 @@ wheels = [
 
 [[package]]
 name = "reachy-mini"
-version = "1.2.2"
+version = "1.2.4"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
@@ -2920,6 +2920,7 @@ dependencies = [
     { name = "libusb-package" },
     { name = "log-throttling" },
     { name = "numpy" },
+    { name = "numpy-stl" },
     { name = "opencv-python" },
     { name = "pip" },
     { name = "psutil" },
@@ -2933,6 +2934,8 @@ dependencies = [
     { name = "scipy" },
     { name = "sounddevice" },
     { name = "soundfile" },
+    { name = "toml" },
+    { name = "trimesh" },
     { name = "uvicorn", extra = ["standard"] },
     { name = "websockets" },
 ]
@@ -2950,6 +2953,7 @@ dev = [
     { name = "ruff" },
     { name = "rustypot" },
     { name = "types-requests" },
+    { name = "types-toml" },
     { name = "urdf-parser-py" },
 ]
 examples = [
@@ -2999,6 +3003,7 @@ requires-dist = [
     { name = "mypy", marker = "extra == 'dev'", specifier = "==1.18.2" },
     { name = "nmcli", marker = "extra == 'wireless-version'", specifier = ">=1.5" },
     { name = "numpy", specifier = ">=2.2.5" },
+    { name = "numpy-stl", specifier = ">=3.2.0" },
     { name = "onnxruntime", marker = "extra == 'nn-kinematics'", specifier = "==1.22.1" },
     { name = "onshape-to-robot", marker = "extra == 'dev'", specifier = "==1.7.6" },
     { name = "opencv-python", specifier = "<=5.0" },
@@ -3027,7 +3032,10 @@ requires-dist = [
     { name = "semver", marker = "extra == 'wireless-version'", specifier = ">=3,<4" },
     { name = "sounddevice", specifier = "==0.5.1" },
     { name = "soundfile", specifier = "==0.13.1" },
+    { name = "toml" },
+    { name = "trimesh", specifier = ">=4.11.0" },
     { name = "types-requests", marker = "extra == 'dev'" },
+    { name = "types-toml", marker = "extra == 'dev'" },
     { name = "urdf-parser-py", marker = "extra == 'dev'", specifier = "==0.0.4" },
     { name = "urdf-parser-py", marker = "extra == 'rerun'", specifier = "==0.0.4" },
     { name = "uvicorn", extras = ["standard"] },
@@ -3632,6 +3640,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d5/1e/626c2d87c29a35fadc8de5624f4302e1ee56cff380d282d62cb3780e6620/transforms3d-0.4.2.tar.gz", hash = "sha256:e8b5df30eaedbee556e81c6938e55aab5365894e47d0a17615d7db7fd2393680", size = 1368797, upload-time = "2024-06-17T11:43:33.231Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/61/7a/f38385f1b2d5f54221baf1db3d6371dc6eef8041d95abff39576c694e9d9/transforms3d-0.4.2-py3-none-any.whl", hash = "sha256:1c70399d9e9473ecc23311fd947f727f7c69ed0b063244828c383aa1aefa5941", size = 1376759, upload-time = "2024-06-20T11:09:19.43Z" },
+]
+
+[[package]]
+name = "trimesh"
+version = "4.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/da/47/f618103c076b06ac79f1ba71e26ca7df0292c3e2b83535d4873e7f127f95/trimesh-4.11.0.tar.gz", hash = "sha256:0b4acdcf28f21013385ccf81619a9dce703af348f69b198180a2212b1bc67821", size = 834847, upload-time = "2026-01-07T19:51:53.043Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/23/cc/5056718bf473be51712ecf74800093a13d69c576f1ca0e0f3cf4684567cf/trimesh-4.11.0-py3-none-any.whl", hash = "sha256:6237019fed3bdc8d68acc45a47a4ea62db1483c3fab5c87d587a48a0e69bbff3", size = 740342, upload-time = "2026-01-07T19:51:50.993Z" },
 ]
 
 [[package]]

@@ -2,12 +2,21 @@
 
 This module ensures that all files under /venvs are owned by the pollen user.
 If any files are not owned by pollen, it will recursively change ownership.
+
+Note: This module only works on Linux/Unix systems. On Windows, the functions
+are no-ops.
 """
 
 import logging
-import pwd
+import platform
 import subprocess
 from pathlib import Path
+
+# pwd module is only available on Unix systems
+if platform.system() != "Windows":
+    import pwd
+else:
+    pwd = None  # type: ignore
 
 logger = logging.getLogger(__name__)
 USER = "pollen"
@@ -23,6 +32,10 @@ def check_and_fix_venvs_ownership(
         custom_logger: Optional logger to use instead of the module logger
 
     """
+    # This function only works on Unix systems
+    if platform.system() == "Windows" or pwd is None:
+        return
+
     try:
         # Get pollen user's UID
         pollen_uid = pwd.getpwnam(USER).pw_uid
