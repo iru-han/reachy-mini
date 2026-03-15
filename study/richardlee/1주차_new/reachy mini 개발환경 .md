@@ -9,7 +9,7 @@
 |The full autonomous experience.Raspberry Pi 4 + Battery + WiFi.|The developer version.USB connection to your computer.|No hardware required.Prototype in MuJoCo.|
 ||||
 
-!\[시뮬레이션과 실제 로봇 비교.png](시뮬레이션과\_실제\_로봇\_비교.png)
+![시뮬레이션과 실제 로봇 비교.png](./시뮬레이션과_실제_로봇_비교.png)
 
 # \*\*\*\*
 
