@@ -148,7 +148,6 @@ cv2.destroyAllWindows()
 
 look_at 예제
 ```
-```
 import cv2
 import numpy as np
 import time
